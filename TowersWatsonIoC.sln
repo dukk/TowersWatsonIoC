@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowersWatsonIoC", "Code\TowersWatsonIoC\TowersWatsonIoC.csproj", "{FFA62383-679E-41D9-8ECD-8D39D28FDE0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code", "Code", "{DCBED7D1-1E94-4D40-81E2-EDE7AC1C76E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3C6C7F70-8914-4974-921F-33609D6C8E40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplicationDemo", "Demo\MvcApplicationDemo\MvcApplicationDemo.csproj", "{8A9D85B1-02DA-42A0-85EA-A30655C4E79E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{635D5767-5FE4-47D1-8809-14740C14CEF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplicationDemo", "Demo\ConsoleApplicationDemo\ConsoleApplicationDemo.csproj", "{932526F6-6135-4922-B83A-5460CFC62A92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09D82D7A-6AFE-44B0-ADE3-AA56E98BA97F}"
+	ProjectSection(SolutionItems) = preProject
+		Design.vsdx = Design.vsdx
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowersWatsonIoC.Tests", "Tests\TowersWatsonIoC.Tests\TowersWatsonIoC.Tests.csproj", "{695A6C3A-E90F-4D49-90FA-3F826A1F7C0F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFA62383-679E-41D9-8ECD-8D39D28FDE0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFA62383-679E-41D9-8ECD-8D39D28FDE0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFA62383-679E-41D9-8ECD-8D39D28FDE0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFA62383-679E-41D9-8ECD-8D39D28FDE0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A9D85B1-02DA-42A0-85EA-A30655C4E79E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A9D85B1-02DA-42A0-85EA-A30655C4E79E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A9D85B1-02DA-42A0-85EA-A30655C4E79E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A9D85B1-02DA-42A0-85EA-A30655C4E79E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{932526F6-6135-4922-B83A-5460CFC62A92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{932526F6-6135-4922-B83A-5460CFC62A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{932526F6-6135-4922-B83A-5460CFC62A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{932526F6-6135-4922-B83A-5460CFC62A92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{695A6C3A-E90F-4D49-90FA-3F826A1F7C0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{695A6C3A-E90F-4D49-90FA-3F826A1F7C0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{695A6C3A-E90F-4D49-90FA-3F826A1F7C0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{695A6C3A-E90F-4D49-90FA-3F826A1F7C0F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FFA62383-679E-41D9-8ECD-8D39D28FDE0D} = {DCBED7D1-1E94-4D40-81E2-EDE7AC1C76E9}
+		{8A9D85B1-02DA-42A0-85EA-A30655C4E79E} = {635D5767-5FE4-47D1-8809-14740C14CEF5}
+		{932526F6-6135-4922-B83A-5460CFC62A92} = {635D5767-5FE4-47D1-8809-14740C14CEF5}
+		{695A6C3A-E90F-4D49-90FA-3F826A1F7C0F} = {3C6C7F70-8914-4974-921F-33609D6C8E40}
+	EndGlobalSection
+EndGlobal

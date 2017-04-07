@@ -1,0 +1,21 @@
+﻿@model IEnumerable<KeyValuePair<string, string>>
+@{
+    ViewBag.Title = "Index";
+}
+
+<table>
+    <caption>Server Variables</caption>
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    @foreach (var pair in this.Model)
+    {
+        <tr>
+            <td>@pair.Key</td>
+            <td>@pair.Value</td>
+        </tr>
+    }
+</table>
