@@ -10,15 +10,11 @@ namespace TowersWatsonIoC.Syntax
     /// <typeparam name="TComponentType"></typeparam>
     /// <typeparam name="TImplementation"></typeparam>
     public interface IComponentContainerRegisterToSyntax<TComponentType, TImplementation>
-	{
-		/// <summary>
-		/// Replaces the default transient component component with a <see cref="component.SingletonComponentRegistration{T}"/>.
-		/// </summary>
-		void AsSingleton();
-
-		/// <summary>
-		/// Replaces the default transient component component with a <see cref="component.PerThreadComponent{T}"/>.
-		/// </summary>
-		void AsSingletonPerThread(); // TODO: Move this to .AsSIngleton().PerThread();
+        where TImplementation : class
+    {
+        /// <summary>
+        /// Replaces the default transient component component with a <see cref="component.SingletonComponentRegistration{T}"/>.
+        /// </summary>
+        IComponentContainerRegisterAsSingletonSyntax<TComponentType, TImplementation> AsSingleton();
 	}
 }

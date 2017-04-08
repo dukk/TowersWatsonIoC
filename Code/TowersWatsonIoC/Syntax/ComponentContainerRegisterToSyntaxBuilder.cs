@@ -16,18 +16,13 @@ namespace TowersWatsonIoC.Syntax
 
 		protected IComponentContainer Container { get; private set; }
 
-		public void AsSingleton()
+		public IComponentContainerRegisterAsSingletonSyntax<TComponentType, TImplementation> AsSingleton()
 		{
 			var component = new SingletonComponent<TComponentType, TImplementation>();
 
 			this.Container.ReplaceRegisteredComponent<TComponentType>(component);
-		}
 
-		public void AsSingletonPerThread()
-		{
-			var component = new PerThreadComponent<TComponentType, TImplementation>();
-
-			this.Container.ReplaceRegisteredComponent<TComponentType>(component);
+            return new ComponentContainerRegisterAsSingletonSyntax<TComponentType, TImplementation>(this.Container);
 		}
 	}
 }

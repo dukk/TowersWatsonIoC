@@ -16,7 +16,15 @@ namespace TowersWatsonIoC.Tests
 		{
 			var container = new ComponentContainer();
 
-			container.Register<ITestComponent>().To<TestComponent>();
+            container.AddRegisteredComponent<ITestComponent>(new StaticComponent<ITestComponent>(new TestComponent()));
+
+            container.AddRegisteredComponent<ITestComponent>(new TransientComponent<ITestComponent, TestComponent>());
+
+            container.AddRegisteredComponent<ITestComponent>(new SingletonComponent<ITestComponent, TestComponent>());
+
+            container.AddRegisteredComponent<ITestComponent>(new PerThreadComponent<ITestComponent, TestComponent>());
+
+            container.Register<ITestComponent>().To<TestComponent>();
 
 			container.Dispose();
 			container.Dispose(); // Get that one extra return if you dispose twice...
@@ -100,7 +108,7 @@ namespace TowersWatsonIoC.Tests
 		[Fact]
 		public void PerThread()
 		{
-			this.Container.Register<ITestComponent>().To<TestComponent>().AsSingletonPerThread();
+			this.Container.Register<ITestComponent>().To<TestComponent>().AsSingleton().PerThread();
 
 			var component = this.Container.GetRegisteredComponent<ITestComponent>();
 			var composedInstanceA = this.Container.Compose<ITestComponent>();

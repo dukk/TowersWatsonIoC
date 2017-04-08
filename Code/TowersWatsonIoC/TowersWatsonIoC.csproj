@@ -56,8 +56,10 @@
     <Compile Include="Components\SingletonComponent.cs" />
     <Compile Include="Components\StaticComponent.cs" />
     <Compile Include="Components\TransientComponent.cs" />
+    <Compile Include="Syntax\ComponentContainerRegisterAsSingletonSyntax.cs" />
     <Compile Include="Syntax\ComponentContainerRegisterSyntaxBuilder.cs" />
     <Compile Include="Syntax\ComponentContainerRegisterToSyntaxBuilder.cs" />
+    <Compile Include="Syntax\IComponentContainerRegisterAsSingletonSyntax.cs" />
     <Compile Include="Syntax\IComponentContainerRegisterSyntax.cs" />
     <Compile Include="Syntax\IComponentContainerRegisterToSyntax.cs" />
   </ItemGroup>

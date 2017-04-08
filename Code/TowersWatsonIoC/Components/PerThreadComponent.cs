@@ -8,8 +8,8 @@ using TowersWatsonIoC.Composition;
 
 namespace TowersWatsonIoC.Components
 {
-    public class PerThreadComponent<TType, TImplementation> : IContainerComponent<TImplementation>
-        where TImplementation : class, TType
+    public class PerThreadComponent<TComponent, TImplementation> : IContainerComponent<TImplementation>
+        where TImplementation : class, TComponent
     {
 		private bool disposed = false;
 		private readonly ThreadLocal<TImplementation> threadLocalInstance;
