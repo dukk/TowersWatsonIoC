@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ComponentContainer.cs" />
     <Compile Include="ComponentContainerSyntaxExtensions.cs" />
+    <Compile Include="Components\ContainerComponenet.cs" />
     <Compile Include="Composition\IComponentComposer.cs" />
     <Compile Include="Composition\IConstructorSelector.cs" />
     <Compile Include="Composition\LargestConstructorSelector.cs" />

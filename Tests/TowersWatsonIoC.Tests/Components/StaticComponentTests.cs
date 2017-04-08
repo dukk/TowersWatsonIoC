@@ -19,16 +19,27 @@ namespace TowersWatsonIoC.Tests.Components
 			Assert.Equal(staticComponent, composeResult);
 		}
 
-		[Fact]
-		public void Dispose()
-		{
-			var staticComponent = new TestComponent();
-			var component = new StaticComponent<ITestComponent>(staticComponent);
+        [Fact]
+        public void Dispose()
+        {
+            var staticComponent = new TestComponent();
+            var component = new StaticComponent<ITestComponent>(staticComponent);
 
-			component.Dispose();
+            component.Dispose();
+            component.Dispose();
 
-			Assert.Throws<ObjectDisposedException>(
-				() => component.Compose(this.Composer, true, this.ConstructorSelector));
-		}
-	}
+            Assert.Throws<ObjectDisposedException>(
+                () => component.Compose(this.Composer, true, this.ConstructorSelector));
+        }
+
+        [Fact]
+        public void PrepareComposition()
+        {
+            var staticComponent = new TestComponent();
+            var component = new StaticComponent<ITestComponent>(staticComponent);
+
+            Assert.Throws<NotImplementedException>(() =>
+                component.PrepareComposition(this.Composer, this.ConstructorSelector));
+        }
+    }
 }

@@ -16,14 +16,6 @@ namespace TowersWatsonIoC.Tests
 		{
 			var container = new ComponentContainer();
 
-            container.AddRegisteredComponent<ITestComponent>(new StaticComponent<ITestComponent>(new TestComponent()));
-
-            container.AddRegisteredComponent<ITestComponent>(new TransientComponent<ITestComponent, TestComponent>());
-
-            container.AddRegisteredComponent<ITestComponent>(new SingletonComponent<ITestComponent, TestComponent>());
-
-            container.AddRegisteredComponent<ITestComponent>(new PerThreadComponent<ITestComponent, TestComponent>());
-
             container.Register<ITestComponent>().To<TestComponent>();
 
 			container.Dispose();
@@ -136,14 +128,52 @@ namespace TowersWatsonIoC.Tests
 		}
 
 		[Fact]
-		public void ServiceProvider_NullServiceType()
+		public void ServiceProviderWithNullServiceType()
 		{
 			var serviceProvider = this.Container as IServiceProvider;
 
 			Assert.Throws<ArgumentNullException>(() => serviceProvider.GetService(null));
 		}
 
-		private void cleanupComponentRegistration<T>()
+        [Fact]
+        public void InvalidInstanceTypeOnComposeUsingInterface()
+        {
+            Assert.Throws(typeof(ArgumentException), 
+                () => this.Container.Compose(typeof(ITestComponentThatShouldNeverBeRegisteredOrTestsMightBreak)));
+            
+        }
+
+        [Fact]
+        public void InvalidInstanceTypeOnComposeUsingAbstractClass()
+        {
+            Assert.Throws(typeof(ArgumentException),
+                () => this.Container.Compose(typeof(AbstractTestComponentThatShouldNeverBeRegisteredOrTestsMightBreak)));
+        }
+
+        [Fact]
+        public void FailToComposeWithUnknownDependancy()
+        {
+            var container = new ComponentContainer();
+
+            // throwOnUnknown defaults to true so this should fail.
+            Assert.Throws<ArgumentException>(
+                () => container.Compose<TestComponentWithADependancy>());
+
+            Assert.Throws<ArgumentException>(
+                () => container.Compose<TestComponentWithADependancy>(throwOnUnknown: true));
+        }
+
+        [Fact]
+        public void ComposeWithUnknownDependancy()
+        {
+            var container = new ComponentContainer();
+            var component = container.Compose<TestComponentWithADependancy>(
+                throwOnUnknown: false);
+
+            Assert.IsType<TestComponentWithADependancy>(component);
+        }
+
+        private void cleanupComponentRegistration<T>()
 		{
 			this.Container.Unregister<T>();
 

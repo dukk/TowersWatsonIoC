@@ -181,17 +181,27 @@ namespace TowersWatsonIoC
 
             var component = this.GetRegisteredComponent(componentType);
 
-            if (null == component)
+            switch (component)
             {
-                if (!componentType.IsClass)
+                case null when componentType.IsInterface && !throwOnUnknown:
+                    return null;
+
+                case null when componentType.IsInterface && throwOnUnknown:
                     throw new ArgumentException($"Failed to compose '{componentType.FullName}', no matching component registration was found. Did you forget to register a component?", nameof(componentType));
 
-                if (componentType.IsAbstract)
+                case null when componentType.IsAbstract && !throwOnUnknown:
+                    return null;
+
+                case null when componentType.IsAbstract && throwOnUnknown:
                     throw new ArgumentException($"Failed to compose '{componentType.FullName}', no matching component registration was found and the requested type can not be constructed because it is abstract.", nameof(componentType));
 
-                return (composer ?? this.DefaultComposer).ComposeUsingConstructor(
-                    componentType, throwOnUnknown, constructorSelector ?? this.DefaultConstructorSelector);
+                case null:
+                    return (composer ?? this.DefaultComposer).ComposeUsingConstructor(
+                        componentType, throwOnUnknown, constructorSelector ?? this.DefaultConstructorSelector);
             }
+
+            if (component.InstanceType.IsAbstract)
+                throw new ArgumentException($"Failed to compose '{componentType.FullName}', no matching component registration was found and the requested type can not be constructed because it is abstract. There may be a bug in your { nameof(IContainerComponent) }.", nameof(componentType));
 
             return component.Compose(composer ?? this.DefaultComposer, throwOnUnknown,
                     constructorSelector ?? this.DefaultConstructorSelector);

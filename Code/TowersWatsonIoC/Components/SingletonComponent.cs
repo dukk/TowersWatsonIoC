@@ -14,31 +14,21 @@ namespace TowersWatsonIoC.Components
     /// If at that time one or more of the components your implementation type depends on hasn't been added yet it may fail.
     /// </remarks>
     /// <typeparam name="T"></typeparam>
-	public class SingletonComponent<TType, TImplementation> : IContainerComponent<TImplementation>
-        where TImplementation : class, TType
+	public class SingletonComponent<TComponenet, TImplementation> : ContainerComponenet<TImplementation>
+        where TImplementation : class, TComponenet
     {
         // TODO: May want to make two different singleton implementations using different locking mechanisums 
         // based on how often this object is expected to be used.
 
-        private bool disposed = false;
         private readonly Lazy<TImplementation> lazyInstance;
 
         public SingletonComponent()
+            : base(typeof(TImplementation))
         {
             this.lazyInstance = new Lazy<TImplementation>(LazyCompose, true);
 
-            if (typeof(TImplementation).IsAbstract)
-                throw new ArgumentException($"Generic argument '{nameof(TImplementation)}' specified an abstract class that can not be constructed. Check your component registrations, you have an invalid implementation type.", nameof(TImplementation));
+            this.IsCompositionPreparationSupported = true;
         }
-
-        [ExcludeFromCodeCoverage]
-        ~SingletonComponent()
-        {
-            this.Dispose(false);
-            GC.SuppressFinalize(this);
-        }
-
-        public bool IsCompositionPreparationSupported { get; private set; } = true;
 
         protected IComponentComposer Composer { get; set; }
 
@@ -46,14 +36,9 @@ namespace TowersWatsonIoC.Components
 
         protected IConstructorSelector ConstructorSelector { get; set; }
 
-        public void Dispose()
+		protected override void Dispose(bool disposing)
 		{
-			this.Dispose(true);
-		}
-
-		protected void Dispose(bool disposing)
-		{
-			if (disposed)
+			if (this.disposed)
 				return;
 
 			if (disposing && this.lazyInstance.IsValueCreated)
@@ -61,10 +46,10 @@ namespace TowersWatsonIoC.Components
 				(this.lazyInstance.Value as IDisposable)?.Dispose();
 			}
 
-			this.disposed = true;
+            base.Dispose(disposing);
 		}
 
-		public TImplementation Compose(IComponentComposer composer, bool throwOnUnknown, 
+		public override TImplementation Compose(IComponentComposer composer, bool throwOnUnknown, 
             IConstructorSelector constructorSelector)
 		{
 			if (disposed)
@@ -86,7 +71,7 @@ namespace TowersWatsonIoC.Components
             return this.lazyInstance.Value;
 		}
 
-		public void PrepareComposition(IComponentComposer composer, IConstructorSelector constructorSelector)
+		public override void PrepareComposition(IComponentComposer composer, IConstructorSelector constructorSelector)
 		{
             if (null == composer)
                 throw new ArgumentNullException(nameof(composer));
@@ -107,11 +92,5 @@ namespace TowersWatsonIoC.Components
 
             return (TImplementation)this.Composer.ComposeUsingConstructor(typeof(TImplementation), this.ThrowOnUnknown, this.ConstructorSelector);
         } 
-
-        object IContainerComponent.Compose(IComponentComposer composer,
-            bool throwOnUnknown, IConstructorSelector constructorSelector)
-        {
-            return this.Compose(composer, throwOnUnknown, constructorSelector);
-        }
     }
 }

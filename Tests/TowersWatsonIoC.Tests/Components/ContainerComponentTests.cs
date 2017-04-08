@@ -7,6 +7,8 @@ namespace TowersWatsonIoC.Tests.Components
 {
     public abstract class ContainerComponentTests
     {
+        // TODO: Refactor a lot more into this, theses tests are all almost the same.
+
         protected ComponentContainer Container;
         protected ReflectionComponentComposer Composer;
         protected LargestConstructorSelector ConstructorSelector;

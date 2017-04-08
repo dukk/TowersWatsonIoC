@@ -8,48 +8,18 @@ using TowersWatsonIoC.Composition;
 
 namespace TowersWatsonIoC.Components
 {
-    public class PerThreadComponent<TComponent, TImplementation> : IContainerComponent<TImplementation>
+    public class PerThreadComponent<TComponent, TImplementation> : ContainerComponenet<TImplementation>
         where TImplementation : class, TComponent
     {
-		private bool disposed = false;
 		private readonly ThreadLocal<TImplementation> threadLocalInstance;
 
 		public PerThreadComponent()
+            : base(typeof(TImplementation))
 		{
-            if (typeof(TImplementation).IsAbstract)
-                throw new ArgumentException($"Generic argument '{nameof(TImplementation)}' specified an abstract class that can not be constructed. Check your component registrations, you have an invalid implementation type.", nameof(TImplementation));
-
             this.threadLocalInstance = new ThreadLocal<TImplementation>(false);
 		}
 
-        [ExcludeFromCodeCoverage]
-        ~PerThreadComponent()
-        {
-            this.Dispose(false);
-            GC.SuppressFinalize(this);
-        }
-
-        public bool IsCompositionPreparationSupported { get; private set; } = true;
-
-        public void Dispose()
-		{
-			this.Dispose(true);
-		}
-
-		protected void Dispose(bool disposing)
-		{
-			if (disposed)
-				return;
-
-			if (disposing)
-			{
-				threadLocalInstance.Dispose();
-			}
-
-			this.disposed = true;
-		}
-
-        public TImplementation Compose(IComponentComposer composer, bool throwOnUnknown,
+        public override TImplementation Compose(IComponentComposer composer, bool throwOnUnknown,
             IConstructorSelector constructorSelector)
         {
 			if (disposed)
@@ -64,11 +34,10 @@ namespace TowersWatsonIoC.Components
             if (null == threadLocalInstance.Value)
                 threadLocalInstance.Value = (TImplementation)composer.ComposeUsingConstructor(typeof(TImplementation), throwOnUnknown, constructorSelector);
 
-
             return threadLocalInstance.Value;
 		}
 
-		public void PrepareComposition(IComponentComposer composer, IConstructorSelector constructorSelector)
+		public override void PrepareComposition(IComponentComposer composer, IConstructorSelector constructorSelector)
 		{
             if (null == composer)
                 throw new ArgumentNullException(nameof(composer));
@@ -79,10 +48,14 @@ namespace TowersWatsonIoC.Components
             composer.PrepareToComposeUsingConstructor(typeof(TImplementation), constructorSelector);
 		}
 
-        object IContainerComponent.Compose(IComponentComposer composer,
-            bool throwOnUnknown, IConstructorSelector constructorSelector)
+        protected override void Dispose(bool disposing)
         {
-            return this.Compose(composer, throwOnUnknown, constructorSelector);
+            if (disposing)
+            {
+                this.threadLocalInstance.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

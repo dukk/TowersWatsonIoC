@@ -62,10 +62,11 @@ namespace TowersWatsonIoC.Composition
             var selectedConstructorInfo = this.DefaultConstructorSelector.SelectConstructor(componentType);
             var activatorKey = Tuple.Create(componentType, constructorSelector.GetType());
 
-            this.Activators.Add(activatorKey, (throwOnUnknown) => this.ComposeUsingConstructor(selectedConstructorInfo, constructorSelector));
+            this.Activators.Add(activatorKey, 
+                (throwOnUnknown) => this.ComposeUsingConstructor(throwOnUnknown, selectedConstructorInfo, constructorSelector));
 		}
 
-		protected virtual object ComposeUsingConstructor(ConstructorInfo constructorInfo, IConstructorSelector constructorSelector)
+		protected virtual object ComposeUsingConstructor(bool throwOnUnknown, ConstructorInfo constructorInfo, IConstructorSelector constructorSelector)
 		{
             if (null == constructorInfo)
                 throw new ArgumentNullException(nameof(constructorInfo));
@@ -75,7 +76,8 @@ namespace TowersWatsonIoC.Composition
 
 			for (var i = 0; i < parameters.Length; i++)
 			{
-				compsedParameters[i] = this.Container.Compose(parameters[i].ParameterType);
+				compsedParameters[i] = this.Container.Compose(parameters[i].ParameterType, 
+                    throwOnUnknown, this, constructorSelector);
 			}
 
 			return constructorInfo.Invoke(compsedParameters);

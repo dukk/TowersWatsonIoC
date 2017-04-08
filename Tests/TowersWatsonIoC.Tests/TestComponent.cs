@@ -7,8 +7,16 @@ namespace TowersWatsonIoC.Tests
 {
     public interface ITestComponent { }
 
-	[ExcludeFromCodeCoverage]
+    public interface ITestComponentTwo { }
+
+    public interface ITestComponentThatShouldNeverBeRegisteredOrTestsMightBreak { }
+
+    [ExcludeFromCodeCoverage]
     public class TestComponent : ITestComponent { }
+
+    public abstract class AbstractTestComponent : ITestComponent { }
+
+    public abstract class AbstractTestComponentThatShouldNeverBeRegisteredOrTestsMightBreak : ITestComponent { }
 
     [ExcludeFromCodeCoverage]
     public class TestComponentWithADependancy : ITestComponent

@@ -8,6 +8,8 @@ namespace TowersWatsonIoC.Components
 {
 	public interface IContainerComponent : IDisposable
 	{
+        Type InstanceType { get; }
+
         bool IsCompositionPreparationSupported { get; }
 
         object Compose(IComponentComposer composer, bool throwOnUnknown, 
