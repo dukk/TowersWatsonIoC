@@ -13,6 +13,9 @@ This project was created at the request of a company as part of their job interv
 	* Composition mechanisms
 	* Constructor selectors
 
+### High Level Design
+![Container UML Design Diagram](https://raw.githubusercontent.com/dukk/TowersWatsonIoC/master/Design_Container.png)
+
 ### Usage
 #### Container Creation
 ```
