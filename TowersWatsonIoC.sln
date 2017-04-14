@@ -18,6 +18,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09D82D7A-6AFE-44B0-ADE3-AA56E98BA97F}"
 	ProjectSection(SolutionItems) = preProject
 		Design.vsdx = Design.vsdx
+		Design_Container.png = Design_Container.png
+		Design_Sequence.png = Design_Sequence.png
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection

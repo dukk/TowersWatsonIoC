@@ -44,17 +44,25 @@ namespace TowersWatsonIoC
 
         public void AddRegisteredComponent<T>(IContainerComponent component)
         {
+            this.AddRegisteredComponent(typeof(T), component);
+        }
+
+        public void AddRegisteredComponent(Type componentType, IContainerComponent component)
+        {
+            if (null == componentType)
+                throw new ArgumentNullException(nameof(componentType));
+
             if (null == component)
                 throw new ArgumentNullException(nameof(component));
 
-            if (this.HasRegisteredComponent<T>())
-                throw new ArgumentException("This type is already registred.", nameof(T));
+            if (this.HasRegisteredComponent(componentType))
+                throw new ArgumentException("This type is already registred.", nameof(componentType));
 
             this.componentsLocker.EnterWriteLock();
 
             try
             {
-                this.Components.Add(typeof(T), component);
+                this.Components.Add(componentType, component);
             }
             finally
             {
